@@ -1,6 +1,7 @@
-var pry = require('pryjs')
-var express = require('express')
-var app = express()
+const pry = require('pryjs')
+const express = require('express')
+const app = express()
+
 
 app.set('port', process.env.PORT || 9876)
 app.locals.title = 'QS Express Api'

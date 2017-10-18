@@ -6,5 +6,3 @@ const environment = process.env.NODE_ENV || 'test';
 const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
 const foods = require('../lib/models/foods')
-
-eval(pry.it)
