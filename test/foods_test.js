@@ -11,11 +11,11 @@ describe('Foods', function(){
   before(function(done){
     this.port = 9876
     this.server = app.listen(this.port, function(err, result){
-      if(err){return done(err)}
+      if(err){ return done(err) }
       done()
     })
     this.request = request.defaults({
-      baseURL: 'http://localhost:9876'
+      baseUrl: 'http://localhost:9876'
     })
   })
   after(function(){
@@ -28,7 +28,7 @@ describe('Foods', function(){
     })
     it('should return a 404 for an unregistered id', function(done){
       var id = 100;
-      this.request.get('http://localhost:9876/api/v1/foods/' + id, function(error, response){
+      this.request.get('/api/v1/foods/' + id, function(error, response){
         if(error){done(error)}
         assert.equal(response.statusCode, 404)
         done()
@@ -37,7 +37,7 @@ describe('Foods', function(){
     it('should return a json object of a food with registered id', function(done){
       var id = 1;
       var food1 = {id: 1, name: "Banana", calories: 105};
-      this.request.get('http://localhost:9876/api/v1/foods/' + id, function(error, response){
+      this.request.get('/api/v1/foods/' + id, function(error, response){
         if(error){done(error)}
         let parsedFood = JSON.parse(response.body)
         assert.deepEqual(parsedFood, food1)
