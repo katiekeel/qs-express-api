@@ -2,11 +2,7 @@ var express = require('express')
 var app = express()
 
 app.set('port', process.env.PORT || 9876)
-app.locals.title = 'Secret Box'
-
-app.get('/', function(request, response) {
-  response.send('It\'s a secret to everyone.')
-})
+app.locals.title = 'QS Express Api'
 
 if (!module.parent) {
   app.listen(app.get('port'), function() {

@@ -1,9 +1,6 @@
 const assert = require('chai').assert
-const app = require('../server')
+const app = require('../lib/server')
 const request = require('request')
-const environment = process.env.NODE_ENV || 'test';
-const configuration = require('../knexfile')[environment];
-const database = require('knex')(configuration);
 
 describe('Server', function(){
   before(function(done){
@@ -26,4 +23,14 @@ describe('Server', function(){
     assert(app)
     done()
   })
+
+  describe('GET /', function() {
+    it('should return a 200', function(done) {
+      this.request.get('/', (error, response) => {
+        if (error) { done(error); }
+        assert.equal(response.statusCode, 200);
+        done();
+      });
+    });
+  });
 })
