@@ -11,7 +11,7 @@ app.get('/', function(request, response) {
 })
 
 app.get('/api/v1/foods', function(request, response) {
-  foods.getAll()
+  foods.all()
   .then(function(food){
     if(food.rowCount == 0) {
       return response.sendStatus(204)
