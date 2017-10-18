@@ -2,6 +2,10 @@ const pry = require('pryjs')
 const express = require('express')
 const app = express()
 const foods = require('./lib/models/foods')
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('port', process.env.PORT || 9876)
 app.locals.title = 'QS Express Api'
