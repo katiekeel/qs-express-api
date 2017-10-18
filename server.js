@@ -1,8 +1,9 @@
 const pry = require('pryjs')
 const express = require('express')
 const app = express()
-const foods = require('./lib/models/foods')
 const bodyParser = require('body-parser')
+const foods = require('./lib/models/foods')
+const meals = require('./lib/models/meals')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -21,6 +22,16 @@ app.get('/api/v1/foods', function(request, response) {
       return response.sendStatus(204)
     }
     response.json(food.rows)
+  })
+})
+
+app.get('/api/v1/meals', function(request, response) {
+  meals.all()
+  .then(function(allMeals){
+    if(allMeals.rowCount == 0) {
+      return response.sendStatus(204)
+    }
+    response.json(allMeals.rows)
   })
 })
 
