@@ -80,3 +80,35 @@ describe('Food Model -- Update', function(){
       })
   })
 });
+describe('Food Model -- Destroy', function(){
+  var cakeId;
+  beforeEach((done) => {
+    var food = {
+        name: 'Chocolate Cake',
+        calories: '450'
+      }
+    Food.create(food)
+    .then(() => {
+      database.raw("SELECT id FROM foods WHERE name = 'Chocolate Cake';")
+        .then((data) => {
+          cakeId = data.rows[0].id
+          done()
+        })
+    })
+  })
+  it('can delete and returns an item based on id', function(done){
+    Food.destroy(cakeId)
+      .then((data) => {
+        var returnedFood = data.rows[0]
+        var formerFood = {id: cakeId, name: 'Chocolate Cake', calories: 450}
+        assert.deepEqual(returnedFood, formerFood)
+      })
+      .then(() => {
+        database.raw("SELECT * FROM foods WHERE name = 'Chocolate Cake';")
+          .then((data)=> {
+            assert.isUndefined(data.rows[0])
+          })
+      })
+      done()
+  })
+})
