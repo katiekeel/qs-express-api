@@ -1,3 +1,4 @@
+require('./test_helper')
 const assert = require('chai').assert
 const app = require('../server')
 const request = require('request')
@@ -8,16 +9,6 @@ const database = require('knex')(configuration);
 const foods = require('../lib/models/food')
 
 describe('Foods', function(){
-  before(function(done){
-    this.port = 3000
-    this.server = app.listen(this.port, function(err, result){
-      if(err){ return done(err) }
-      done()
-    })
-    this.request = request.defaults({
-      baseUrl: 'http://localhost:9876'
-    })
-  })
   var formerId;
   beforeEach((done) => {
     var food = {
@@ -32,9 +23,6 @@ describe('Foods', function(){
         done()
       })
     })
-  })
-  after(function(){
-    this.server.close()
   })
 
   describe('GET /api/v1/foods', function() {

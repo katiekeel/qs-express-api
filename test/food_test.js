@@ -1,9 +1,10 @@
-var assert = require('chai').assert;
-var pry = require('pryjs');
-var environment = process.env.NODE_ENV || 'test'
-var configuration = require('../knexfile')[environment]
-var database = require('knex')(configuration)
+const assert = require('chai').assert;
+const pry = require('pryjs');
+const environment = process.env.NODE_ENV || 'test'
+const configuration = require('../knexfile')[environment]
+const database = require('knex')(configuration)
 const Food = require('../lib/models/food')
+
 describe('Food Model -- modular functions', function(){
   var formerId;
   beforeEach((done) => {
@@ -20,6 +21,7 @@ describe('Food Model -- modular functions', function(){
       })
     })
   })
+
   describe('-- Find', function(){
     after((done) => {
       database.raw("DELETE FROM foods WHERE name = 'Carrot Cake';")
@@ -36,6 +38,7 @@ describe('Food Model -- modular functions', function(){
       done()
     })
   });
+
   describe('-- Create', function(){
     after((done) => {
       database.raw("DELETE FROM foods WHERE name = 'Coffee Cake';")
@@ -59,6 +62,7 @@ describe('Food Model -- modular functions', function(){
       })
     })
   });
+
   describe('-- Update', function(){
     after((done) => {
       database.raw("DELETE FROM foods WHERE name = 'Coffee Cake';")
@@ -82,6 +86,7 @@ describe('Food Model -- modular functions', function(){
       })
     })
   });
+
   describe('-- Destroy', function(){
     var cakeId;
     beforeEach((done) => {
