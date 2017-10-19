@@ -16,6 +16,7 @@ describe('Meals', function() {
         assert.equal(response.statusCode, 200)
         assert.include(response.body, "Breakfast")
         assert.include(response.body, "Dinner")
+        done()
       })
     })
   })

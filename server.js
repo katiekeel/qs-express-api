@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const food = require('./lib/models/food')
 const Foods = require('./lib/controllers/foods')
+const Meals = require('./lib/controllers/meals')
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
@@ -24,15 +25,7 @@ app.delete('/api/v1/foods/:id', Foods.deleteFood);
 
 app.patch('/api/v1/foods/:id', Foods.patchFood);
 
-app.get('/api/v1/meals', function(request, response) {
-  meals.all()
-  .then(function(allMeals){
-    if(allMeals.rowCount == 0) {
-      return response.sendStatus(204)
-    }
-    response.json(allMeals.rows)
-  })
-})
+app.get('/api/v1/meals', Meals.getMeals);
 
 if (!module.parent) {
   app.listen(app.get('port'), function() {

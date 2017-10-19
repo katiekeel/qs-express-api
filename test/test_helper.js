@@ -3,13 +3,13 @@ const app = require('../server')
 const request = require('request')
 
 before(function(done){
-  this.port = 9876
+  this.port = 3001
   this.server = app.listen(this.port, function(err, result){
     if(err) { return done(err) }
     done()
   })
   this.request = request.defaults({
-    baseUrl: 'http://localhost:9876'
+    baseUrl: 'http://localhost:3001'
   })
 })
 
