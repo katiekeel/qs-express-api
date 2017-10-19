@@ -30,5 +30,13 @@ describe('Meals', function() {
         done()
       })
     })
+
+    it('returns a 404 for a bad id', function(done) {
+      this.request.get('/api/v1/meals/43/foods', function(error, response) {
+        if (error) { done(error); }
+        assert.equal(response.statusCode, 404)
+        done()
+      })
+    })
   })
 })
