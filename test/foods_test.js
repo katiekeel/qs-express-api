@@ -67,6 +67,41 @@ describe('Foods', function(){
       })
     })
   });
+  describe('PATCH', function(){
+    beforeEach((done) => {
+      var food = {
+          name: 'Carrot Cake',
+          calories: '450'
+        }
+      foods.create(food)
+      .then(() => done())
+    })
+    afterEach((done) => {
+      database.raw("DELETE FROM foods WHERE calories = 299;")
+      .then(() => done())
+    })
+    it('should be able to edit foods', function(done){
+      var foodAmmendment = {
+        food: {
+          name: 'Carrot Cake n CreamCheese',
+          calories: 299
+        }
+      }
+      database.raw('SELECT MAX(id) FROM foods;')
+      .then((data) => {
+        var id = data.rows[0].max;
+        this.request.patch('/api/v1/foods/'+id, {form: foodAmmendment}, function(error, response){
+          if(error){done(error)}
+          var food = {id: id, name: "Carrot Cake n CreamCheese", calories: 299};
+          patchedResponse = JSON.parse(response.body)
+          assert.hasAllDeepKeys(patchedResponse, ['id', 'name', 'calories'])
+          assert.deepEqual(patchedResponse, food)
+          assert.isTrue(patchedResponse.name.includes('CreamCheese'))
+          done()
+        })
+      })
+    })
+  })
   describe('DELETE', function(){
     beforeEach((done) => {
       var food = {
