@@ -46,8 +46,8 @@ describe('Foods', function(){
       this.request.get('/api/v1/foods/' + id, function(error, response){
         if(error){done(error)}
         assert.equal(response.statusCode, 404)
-        done()
       })
+      done()
     })
     it('should return a json object of a food with registered id', function(done){
       var food1 = {id: formerId, name: "Carrot Cake", calories: 450};
