@@ -46,6 +46,10 @@ describe('Foods', function(){
     })
   });
   describe('POST /api/v1/foods', function(){
+    beforeEach((done) => {
+      database.raw("DELETE FROM foods WHERE name = 'Carrot Cake';")
+      .then(() => done())
+    })
     it('should be able to post a new food', function(done){
       var foodDetails = {
         food: {
