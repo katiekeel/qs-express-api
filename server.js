@@ -1,4 +1,9 @@
-
+const pry = require('pryjs')
+const express = require('express')
+const app = express()
+const food = require('./lib/models/food')
+const Foods = require('./lib/controllers/foods')
+const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
