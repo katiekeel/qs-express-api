@@ -1,7 +1,7 @@
 var pry = require('pryjs')
 var express = require('express')
 var app = express()
-var foods = require('./lib/models/foods')
+var foods = require('./lib/models/food')
 app.set('port', process.env.PORT || 9876)
 // app.locals.title = 'Secret Box'
 
@@ -17,6 +17,8 @@ app.get('/api/v1/foods/:id', function(request, response) {
     response.json(food.rows[0])
   })
 })
+
+app.post('/api/v1/foods', foods.postFood);
 
 if (!module.parent) {
   app.listen(app.get('port'), function() {
