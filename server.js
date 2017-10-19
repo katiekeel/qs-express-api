@@ -14,18 +14,13 @@ app.get('/', function(request, response) {
   response.send('It\'s a secret to everyone.')
 })
 
-app.get('/api/v1/foods/:id', function(request, response) {
-  var id = request.params.id;
-  food.find(id)
-  .then(function(food){
-    if(food.rowCount == 0){return response.sendStatus(404)}
-    response.json(food.rows[0])
-  })
-})
+app.get('/api/v1/foods/:id', Foods.findFood);
 
 app.post('/api/v1/foods', Foods.postFood);
 
 app.delete('/api/v1/foods/:id', Foods.deleteFood);
+
+app.patch('/api/v1/foods/:id', Foods.patchFood);
 
 if (!module.parent) {
   app.listen(app.get('port'), function() {
