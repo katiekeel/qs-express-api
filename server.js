@@ -14,6 +14,8 @@ app.get('/', function(request, response) {
   response.send('QS Express API')
 })
 
+app.get('/api/v1/foods', Foods.getFoods);
+
 app.get('/api/v1/foods/:id', Foods.findFood);
 
 app.post('/api/v1/foods', Foods.postFood);
