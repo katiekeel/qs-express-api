@@ -5,62 +5,64 @@ var configuration = require('../knexfile')[environment]
 var database = require('knex')(configuration)
 const Food = require('../lib/models/food')
 describe('Food Model -- modular functions', function(){
+  var formerId;
+  beforeEach((done) => {
+    var food = {
+      name: 'Carrot Cake',
+      calories: '450'
+    }
+    Food.create(food)
+    .then(() => {
+      database.raw("SELECT id FROM foods WHERE name = 'Carrot Cake';")
+      .then((data) => {
+        formerId = data.rows[0].id
+        done()
+      })
+    })
+  })
   describe('-- Find', function(){
-    it('can find an existing food given id', function(){
+    after((done) => {
+      database.raw("DELETE FROM foods WHERE name = 'Carrot Cake';")
+      .then(() => done())
+    })
+    it('can find an existing food given id', function(done){
       var foodItem;
-      var id = 1
-      var food1 = {id: 1, name: 'Banana', calories: 105}
-      Food.find(id)
+      var food1 = {id: formerId, name: 'Carrot Cake', calories: 450}
+      Food.find(formerId)
       .then(function(food){
         foodItem = food.rows[0]
         assert.deepEqual(foodItem, food1)
       })
+      done()
     })
   });
   describe('-- Create', function(){
-    afterEach((done) => {
-      database.raw("DELETE FROM foods WHERE name = 'Carrot Cake';")
+    after((done) => {
+      database.raw("DELETE FROM foods WHERE name = 'Coffee Cake';")
+      .then(() => {
+        database.raw("DELETE FROM foods WHERE name = 'Carrot Cake';")
+      })
       .then(() => done())
     })
     it('can create a new food item', function(done){
       database.raw('SELECT MAX(id) from foods;')
       .then((data) => {
         var id = data.rows[0].max;
-        var newId = id + 3
-        var newFood = {id: newId, name: 'Carrot Cake', calories: 299};
+        var newId = id + 1
+        var newFood = {id: newId, name: 'Coffee Cake', calories: 299};
         Food.create(newFood)
         .then(function(food){
           let returnFood = food.rows[0]
           assert.deepEqual(returnFood, newFood)
-          done()
         })
+        done()
       })
     })
   });
   describe('-- Update', function(){
-    var formerId;
-    beforeEach((done) => {
-      var food = {
-        name: 'Carrot Cake',
-        calories: '450'
-      }
-      Food.create(food)
-      .then(() => {
-        database.raw("SELECT id FROM foods WHERE name = 'Carrot Cake';")
-        .then((data) => {
-          formerId = data.rows[0].id
-          done()
-        })
-      })
-    })
-    afterEach((done) => {
-      database.raw("SELECT id FROM foods WHERE name ='Coffee Cake';")
-      .then((data) => {
-        var editedFoodId = data.rows[0].id;
-        var previousDeets = {name: 'Carrot Cake', calories: 450};
-        Food.update(editedFoodId, previousDeets)
-        .then(() => done())
-      })
+    after((done) => {
+      database.raw("DELETE FROM foods WHERE name = 'Coffee Cake';")
+      .then(() => done())
     })
     it('can edit and update a food with correct properties', function(done){
       database.raw(`SELECT id, name, calories FROM foods WHERE id=${formerId};`)

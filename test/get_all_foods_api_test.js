@@ -7,7 +7,7 @@ const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
 
 
-describe('GET /api/v1/foods', function() {
+xdescribe('GET /api/v1/foods', function() {
   it('returns the foods in the database and a 201 code', function(done) {
     this.request.get('/api/v1/foods', (error, response) => {
       if (error) { done(error); }

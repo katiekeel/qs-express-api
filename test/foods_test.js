@@ -7,7 +7,7 @@ const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
 const foods = require('../lib/models/food')
 
-describe('Foods', function(){
+xdescribe('Foods', function(){
   before(function(done){
     this.port = 3000
     this.server = app.listen(this.port, function(err, result){
