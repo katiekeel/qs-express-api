@@ -11,11 +11,22 @@ const foods = require('../lib/models/food')
 describe('Meals', function() {
   describe('GET /api/v1/meals', function() {
     it('returns the meals in the database and a 200 code', function(done) {
-      this.request.get('/api/v1/meals', (error, response) => {
+      this.request.get('/api/v1/meals', function(error, response) {
         if (error) { done(error); }
         assert.equal(response.statusCode, 200)
         assert.include(response.body, "Breakfast")
         assert.include(response.body, "Dinner")
+        done()
+      })
+    })
+  })
+
+  describe('GET /api/v1/meals/:id/foods', function() {
+    it('returns the meal and a 200 code', function(done) {
+      this.request.get('/api/v1/meals/1/foods', function(error, response) {
+        if (error) { done(error); }
+        assert.include(response.body, "Breakfast")
+        assert.equal(response.statusCode, 200)
         done()
       })
     })
