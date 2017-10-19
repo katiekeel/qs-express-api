@@ -27,7 +27,7 @@ describe('Foods', function(){
       assert(app)
     })
     it('should return a 404 for an unregistered id', function(done){
-      var id = 100;
+      let id = 100;
       this.request.get('/api/v1/foods/' + id, function(error, response){
         if(error){done(error)}
         assert.equal(response.statusCode, 404)
@@ -35,7 +35,7 @@ describe('Foods', function(){
       })
     })
     it('should return a json object of a food with registered id', function(done){
-      var id = 1;
+      let id = 1;
       var food1 = {id: 1, name: "Banana", calories: 105};
       this.request.get('/api/v1/foods/' + id, function(error, response){
         if(error){done(error)}
@@ -67,4 +67,28 @@ describe('Foods', function(){
       })
     })
   });
+  describe('DELETE', function(){
+    beforeEach((done) => {
+      var food = {
+          name: 'Carrot Cake',
+          calories: '450'
+        }
+      foods.create(food)
+      .then(() => done())
+    })
+    it('Deletes a food item from the db given an id', function(done){
+      database.raw('SELECT MAX(id) FROM foods;')
+        .then((data) => {
+          var id = data.rows[0].max;
+          this.request.delete('api/v1/foods/' + id, function(error, response){
+            if(error){done(error)}
+            let parsedFood = JSON.parse(response.body)
+            assert.hasAllDeepKeys(parsedFood, ['id', 'name', 'calories'])
+            assert.equal(parsedFood.id, id)
+            assert.equal(response.statusCode, 200)
+            done()
+          })
+        })
+    })
+  })
 });

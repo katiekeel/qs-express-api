@@ -25,6 +25,8 @@ app.get('/api/v1/foods/:id', function(request, response) {
 
 app.post('/api/v1/foods', Foods.postFood);
 
+app.delete('/api/v1/foods/:id', Foods.deleteFood);
+
 if (!module.parent) {
   app.listen(app.get('port'), function() {
     console.log(`${app.locals.title} is running on ${app.get('port')}.`);
