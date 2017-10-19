@@ -45,4 +45,22 @@ describe('Foods', function(){
       })
     })
   });
+  describe('POST /api/v1/foods', function(){
+    it('should be able to post a new food', function(done){
+      var foodDetails = {
+        food: {
+          name: 'Carrot Cake',
+          calories: '450'
+        }
+      }
+      this.request.post('/api/v1/foods', {form: foodDetails}, function(error, response){
+        if(error) { done(error) }
+        var parsedFood = JSON.parse(response.body);
+        assert.equal('Carrot Cake', parsedFood.name)
+        assert.equal(450, parsedFood.calories)
+        assert.equal(response.statusCode, 201)
+        done()
+      })
+    })
+  });
 });
