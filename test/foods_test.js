@@ -9,7 +9,7 @@ const foods = require('../lib/models/food')
 
 describe('Foods', function(){
   before(function(done){
-    this.port = 9876
+    this.port = 3000
     this.server = app.listen(this.port, function(err, result){
       if(err){ return done(err) }
       done()
@@ -27,7 +27,7 @@ describe('Foods', function(){
       assert(app)
     })
     it('should return a 404 for an unregistered id', function(done){
-      let id = 100;
+      let id = 1000;
       this.request.get('/api/v1/foods/' + id, function(error, response){
         if(error){done(error)}
         assert.equal(response.statusCode, 404)
