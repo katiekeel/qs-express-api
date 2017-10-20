@@ -1,4 +1,3 @@
-const pry = require('pryjs')
 const express = require('express')
 const app = express()
 const food = require('./lib/models/food')
