@@ -39,4 +39,14 @@ describe('Meals', function() {
       })
     })
   })
+
+  describe('POST /api/v1/meals/:id/foods/:id', function () {
+    it('creates a new entry in the meal foods table', function(done) {
+      this.request.post('/api/v1/meals/1/foods/2', function(error, response) {
+        if (error) { done(error) }
+        assert.equal(response.statusCode, 200)
+        done()
+      })
+    })
+  })
 })

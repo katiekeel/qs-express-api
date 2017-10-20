@@ -29,6 +29,8 @@ app.get('/api/v1/meals', Meals.getMeals);
 
 app.get('/api/v1/meals/:id/foods', Meals.findMeal);
 
+app.post('/api/v1/meals/:meal_id/foods/:food_id', Meals.postMealFood);
+
 if (!module.parent) {
   app.listen(app.get('port'), function() {
     console.log(`${app.locals.title} is running on ${app.get('port')}.`);
