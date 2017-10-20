@@ -13,7 +13,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Methods", "POST, PATCH, GET, DELETE, OPTIONS")
   next();
 });
-app.set('port', process.env.PORT || 9876)
+app.set('port', process.env.PORT || 3000)
 app.locals.title = 'QS Express Api'
 
 app.get('/', function(request, response) {
